@@ -23,8 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Optional<Users> userInfo = Optional.ofNullable(loginRepository.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("안녕")));
+        Optional<Users> userInfo = Optional.ofNullable(loginRepository.findByUsername(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다.")));
 
 
         Collection<GrantedAuthority> authority = new ArrayList<>();
