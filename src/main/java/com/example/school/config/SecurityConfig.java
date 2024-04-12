@@ -15,53 +15,46 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity //웹 보안 활성화
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     /**
-     * Securtity 설정
+     * Securtity
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //1단계 보안 검사
-        http.csrf(AbstractHttpConfigurer::disable); //csrf보호(지금은 사용안함)
+        http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(request ->
                  request
-                        .requestMatchers("/**")//개발을 위해 잠시 모두 해제
-                        .permitAll() //해당 경로는 보안검사 없음.
+                        .requestMatchers("/**")
+                        .permitAll()
                         .anyRequest()
-                        .authenticated() //나머진 모두 보안검사
+                        .authenticated()
         );
-        //2단계 로그인 폼 설정
         http.formLogin(login ->
                 login
-                        .loginPage("/login") //사용자 정의 로그인 페이지
-                        .loginProcessingUrl("/login-processing") //로그인 form action Url
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login-processing")
                         .defaultSuccessUrl("/")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .successHandler(new LoginSuccessHandler()) //로그인 성공 핸들러
-                        .failureHandler(new LoginFailureHandler()) //로그인 실패 핸들러
-                        .permitAll() //로그인 페이지 접근 권한 승인
-        );
-        //3단계 로그아웃 설정
-        http.logout(logout ->
-                logout
-                        .deleteCookies("JSESSIONID","remember-me") //로그아웃시 쿠키 삭제
-                        .addLogoutHandler(new LogoutCustomHandler()) //로그아웃 핸들러
+                        .successHandler(new LoginSuccessHandler())
+                        .failureHandler(new LoginFailureHandler())
                         .permitAll()
         );
-        //4단계 인증 절차
+        http.logout(logout ->
+                logout
+                        .deleteCookies("JSESSIONID","remember-me")
+                        .addLogoutHandler(new LogoutCustomHandler())
+                        .permitAll()
+        );
         http.authenticationProvider(new LoginProvider(customUserDetailsService, getPasswordEncoder()));
         return http.build();
     }
 
-    /**
-     * 패스워드 인코더
-     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();

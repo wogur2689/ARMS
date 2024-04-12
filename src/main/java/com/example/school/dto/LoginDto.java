@@ -1,9 +1,7 @@
 package com.example.school.dto;
 
 import lombok.*;
-/**
- * 기본 로그인 dto
- */
+
 @Getter
 @Builder
 @AllArgsConstructor

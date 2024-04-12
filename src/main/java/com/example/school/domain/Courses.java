@@ -44,9 +44,12 @@ public class Courses {
 
     //변경감지(수정)
     public void coursesUpdate(CoursesRequestDto coursesRequestDTO) {
-        this.writer = coursesRequestDTO.getWriter();
-        this.category = coursesRequestDTO.getCategory();
-        this.title = coursesRequestDTO.getTitle();
-        this.content = coursesRequestDTO.getContent();
+        this.lectureDate = coursesRequestDTO.getLectureDate();
+        this.semester = coursesRequestDTO.getSemester();
+        this.subjectCode = coursesRequestDTO.getSubjectCode();
+        this.subjectName = coursesRequestDTO.getSubjectName();
+        this.subjectClassification = coursesRequestDTO.getSubjectClassification();
+        this.professor = coursesRequestDTO.getProfessor();
+        this.grades = coursesRequestDTO.getGrades();
     }
 }

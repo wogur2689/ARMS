@@ -14,36 +14,32 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import java.io.IOException;
 
-/**
- * ·Î±×ÀÎ ¼º°ø½Ã ¼¼¼Ç »ý¼º
- */
 @Slf4j
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        //1. ¼¼¼Ç ÃÊ±âÈ­
+
         HttpSession session = request.getSession(false);
 
         try {
-            //2. id ÃßÃâ
+            //2. id ï¿½ï¿½ï¿½ï¿½
             String userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             //Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
-            //3. À¯Àú Á¤º¸ ¼¼ÆÃ
+
             LoginDto loginDTO = LoginDto.builder()
                     .userId(userId)
                     .role(Role.USER.getRole())
                     .build();
 
-            //4. À¯ÀúÁ¤º¸ ¼¼¼Ç¿¡ ÀúÀå ÈÄ ¼¼¼Ç Áö¼Ó½Ã°£ ¼³Á¤(60ºÐ)
             session.setAttribute("UserInfo", loginDTO);
             session.setMaxInactiveInterval(3600);
         } catch (Exception e) {
             log.error("### error : {} ###", e.getMessage());
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"½Ã½ºÅÛ ¿¡·¯ÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
         }
-        //·Î±×ÀÎ ¼º°øÈÄ ¸ÞÀÎÀ¸·Î ÀÌµ¿
+
         response.sendRedirect(request.getContextPath() + "/");
     }
 }

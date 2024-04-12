@@ -11,9 +11,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-/**
- * ÀÎÁõ ÅäÅ« »ý¼º
- */
 @Slf4j
 @RequiredArgsConstructor
 public class LoginProvider implements AuthenticationProvider {
@@ -24,21 +21,18 @@ public class LoginProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        //1. ÀÔ·Â¹ÞÀº °ª¿¡¼­ »ç¿ëÀÚ ÀÌ¸§, ºñ¹Ð¹øÈ£ »ý¼º
         //log.info(authentication.getDetails().toString()); //WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=6B8D861708F03350B044E8FE743A227A]
         String username = authentication.getName(); //id
         String password = authentication.getCredentials().toString(); //password
 
-        //2. db¿¡¼­ »ç¿ëÀÚ ÀÌ¸§, ºñ¹Ð¹øÈ£ °¡Á®¿À±â
         UserDetails user = customUserDetailsService.loadUserByUsername(username);
 
-        //3. ºñ¹Ð¹øÈ£°¡ ¸Â´ÂÁö Æ²¸®´ÂÁö È®ÀÎ
         if(!passwordEncoder.matches(password, user.getPassword())) {
             log.error("### login param error userId : {}, password : {}", username, password);
-            throw new BadCredentialsException("ºñ¹Ð¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
+            throw new BadCredentialsException("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.");
         }
 
-        //4. ÅäÅ« »ý¼º
+        //4. ï¿½ï¿½Å« ï¿½ï¿½ï¿½ï¿½
         return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 

@@ -1,8 +1,6 @@
 package com.example.school.dto;
 
-import com.example.commonproject.board.domain.Board;
 import com.example.school.domain.Courses;
-import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

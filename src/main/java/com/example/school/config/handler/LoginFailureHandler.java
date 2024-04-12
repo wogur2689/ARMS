@@ -8,16 +8,14 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 import java.io.IOException;
 
-/**
- * ·Î±×ÀÎ ½ÇÆÐ½Ã ·Î±×ÀÎ ÆäÀÌÁö¿¡ ¿¡·¯ ¸Þ¼¼Áö Àü¼Û.
- */
+
 @Slf4j
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         log.info("### error msg : {} ###", exception.getMessage());
 
-        //·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+        //ï¿½Î±ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         log.info("### login fail ###");
         response.sendRedirect("/login");
     }

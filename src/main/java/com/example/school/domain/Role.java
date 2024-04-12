@@ -3,14 +3,11 @@ package com.example.school.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * ±ÇÇÑ
- */
 @Getter
 @AllArgsConstructor
 public enum Role {
-    USER("ROLE_USER", "À¯Àú"),
-    ADMIN("ROLE_ADMIN", "°ü¸®ÀÚ");
+    USER("ROLE_USER", "ìœ ì €"),
+    ADMIN("ROLE_ADMIN", "ê´€ë¦¬ì");
 
     private final String role;
     private final String msg;

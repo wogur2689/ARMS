@@ -16,12 +16,12 @@ public class LogoutCustomHandler implements LogoutHandler, LogoutSuccessHandler 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         HttpSession session = request.getSession();
-        session.invalidate(); //로그인 세션 제거
+        session.invalidate();
     }
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("### logout success ###");
-        response.sendRedirect("/login"); //로그아웃 성공 후 로그인 화면으로 이동
+        response.sendRedirect("/login");
     }
 }

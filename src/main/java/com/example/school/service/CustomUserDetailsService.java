@@ -23,15 +23,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        //1. db¿¡¼­ »ç¿ëÀÚ °Ë»ö
         Optional<Users> userInfo = Optional.ofNullable(loginRepository.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("ÇØ´ç ¾ÆÀÌµð´Â ¾ø´Â ¾ÆÀÌµðÀÔ´Ï´Ù.")));
+                .orElseThrow(() -> new UsernameNotFoundException("ì•ˆë…•")));
 
-        //2. À¯Àú ±ÇÇÑ »ý¼º
+
         Collection<GrantedAuthority> authority = new ArrayList<>();
         authority.add(new SimpleGrantedAuthority(Role.USER.getRole()));
 
-        //3. UserDetails¿¡ ÀúÀå
         return CustomUserDetailsDto.builder()
                 .username(userInfo.get().getUsername())
                 .password(userInfo.get().getPassword())
