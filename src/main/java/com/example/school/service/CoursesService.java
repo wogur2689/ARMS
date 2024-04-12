@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -28,12 +30,12 @@ public class CoursesService {
 
     //list
     @Transactional(readOnly = true)
-    public Page<CoursesResponseDto> coursesList(int page) {
-        //페이징
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Courses> coursesPage = coursesRepository.findAll(pageable);
+    public List<CoursesResponseDto> coursesList() {
+        List<Courses> list = coursesRepository.findAll();
 
-        return coursesPage.map(CoursesResponseDto::toDto);
+        return list.stream()
+                .map(CoursesResponseDto::toDto)
+                .toList();
     }
 
     //view

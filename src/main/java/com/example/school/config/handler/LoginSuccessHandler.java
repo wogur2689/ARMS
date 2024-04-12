@@ -23,7 +23,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession(false);
 
         try {
-            //2. id ����
             String userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             //Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
@@ -37,7 +36,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             session.setMaxInactiveInterval(3600);
         } catch (Exception e) {
             log.error("### error : {} ###", e.getMessage());
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"�ý��� �����Դϴ�. �ٽ� �õ����ּ���.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"시스템 에러입니다.");
         }
 
         response.sendRedirect(request.getContextPath() + "/");

@@ -17,17 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class CoursesController {
     private final CoursesService coursesService;
 
-    /**
-     * 리스트 화면(페이징)
-     */
-    @GetMapping("/list")
-    public ModelAndView courses(
-            @RequestParam(defaultValue = "1") int page,
-            ModelAndView mav) {
-        mav.addObject("list", coursesService.coursesList(page));
-        mav.setViewName("courses/list");
-        return mav;
-    }
 
     /**
      * 게시판 작성
