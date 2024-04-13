@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CoursesResponseDto {
     private Long id;
-    private Date lectureDate;    //수강년도
+    private String lectureDate;    //수강년도
     private int semester;       //학기
     private String subjectCode;  //교과코드
     private String subjectName;  //교과목명
@@ -23,6 +23,7 @@ public class CoursesResponseDto {
     public static CoursesResponseDto toDto(Courses courses) {
         return CoursesResponseDto.builder()
                 .id(courses.getId())
+                .lectureDate(courses.getLectureDate())
                 .semester(courses.getSemester())
                 .subjectCode(courses.getSubjectCode())
                 .subjectName(courses.getSubjectName())

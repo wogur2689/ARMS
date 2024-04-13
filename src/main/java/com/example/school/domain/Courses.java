@@ -22,7 +22,7 @@ public class Courses {
     private Long id;
 
     @Column(name = "lecture_date")
-    private Date lectureDate;    //수강년도
+    private String lectureDate;    //수강년도
 
     @Column(name = "semester")
     private int semester;       //학기

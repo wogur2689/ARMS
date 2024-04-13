@@ -32,7 +32,6 @@ public class LoginProvider implements AuthenticationProvider {
             throw new BadCredentialsException("비밀번호가 틀렸습니다.");
         }
 
-        //4. ��ū ����
         return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 

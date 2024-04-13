@@ -27,8 +27,16 @@ public class PageController {
     }
 
     @GetMapping("/credit")
-    public ModelAndView creditInquiryPage(ModelAndView mav) {
+    public ModelAndView creditPage(ModelAndView mav) {
+        mav.addObject("list", coursesService.coursesList());
+        mav.addObject("sumGrades", coursesService.sumGrades());
         mav.setViewName("credit");
+        return mav;
+    }
+    @GetMapping("/credit/{year}/{id}")
+    public ModelAndView creditInquiryPage(@PathVariable String year, @PathVariable int id,ModelAndView mav) {
+        mav.addObject("list", coursesService.coursesView(year, id));
+        mav.setViewName("creditDetail");
         return mav;
     }
 
@@ -40,14 +48,6 @@ public class PageController {
 
     @GetMapping("/enrolmentInquiry")
     public ModelAndView enrolmentInquiryPage(ModelAndView mav) {
-        mav.addObject("list", coursesService.coursesList());
-        mav.setViewName("enrolmentInquiry");
-        return mav;
-    }
-
-    @GetMapping("/enrolmentInquiry/{year}/{id}")
-    public ModelAndView enrolmentInquiryPage(@PathVariable Long year, @PathVariable Long id, ModelAndView mav) {
-        mav.addObject("list", coursesService.coursesView(id));
         mav.setViewName("enrolmentInquiry");
         return mav;
     }

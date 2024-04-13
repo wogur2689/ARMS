@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CoursesRequestDto {
     private Long id;
-    private Date lectureDate;    //수강년도
+    private String lectureDate;    //수강년도
     private int semester;       //학기
     private String subjectCode;  //교과코드
     private String subjectName;  //교과목명
@@ -24,7 +24,7 @@ public class CoursesRequestDto {
     //dto -> entity
     public Courses toEntity(CoursesRequestDto coursesRequestDto) {
         return Courses.builder()
-                .lectureDate(coursesRequestDto.lectureDate)
+                .lectureDate(coursesRequestDto.getLectureDate())
                 .semester(coursesRequestDto.getSemester())
                 .subjectCode(coursesRequestDto.getSubjectCode())
                 .subjectName(coursesRequestDto.getSubjectName())

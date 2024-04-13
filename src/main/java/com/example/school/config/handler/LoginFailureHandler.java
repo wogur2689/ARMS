@@ -15,8 +15,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         log.info("### error msg : {} ###", exception.getMessage());
 
-        //�α��� ȭ������ �̵�
-        log.info("### login fail ###");
         response.sendRedirect("/login");
     }
 }

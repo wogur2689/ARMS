@@ -20,7 +20,6 @@ import java.util.List;
 @Transactional
 public class CoursesService {
     private final CoursesRepository coursesRepository;
-    private static final int size = 5; //한 페이지당 보여질 게시글 갯수
 
     //create
     public CoursesResponseDto coursesSave(CoursesRequestDto coursesRequestDTO) {
@@ -38,11 +37,20 @@ public class CoursesService {
                 .toList();
     }
 
+    //grades sum
+    @Transactional(readOnly = true)
+    public int sumGrades() {
+        return coursesRepository.countByGrades();
+    }
+
     //view
     @Transactional(readOnly = true)
-    public CoursesResponseDto coursesView(Long id) {
-        Courses courses = coursesRepository.findById(id).orElseThrow();
-        return CoursesResponseDto.toDto(courses);
+    public List<CoursesResponseDto> coursesView(String year, int semester) {
+        List<Courses> coursesList = coursesRepository.findByLectureDateAndSemester(year, semester).orElseThrow();
+
+        return coursesList.stream()
+                .map(CoursesResponseDto::toDto)
+                .toList();
     }
 
     //update

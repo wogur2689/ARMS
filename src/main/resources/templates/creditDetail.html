@@ -11,17 +11,19 @@
     <script th:src="@{/js/common.js}"></script>
 </head>
 <body>
-    <h1>학년별 이수 학점 조회</h1>
+    <h1>학년별 이수 학점 상세 조회</h1>
     <div class="container pt-4 mw-100">
         <div class="form-group d-flex mb-2">
         </div>
         <table class="table">
             <thead class="thead-light">
             <tr class="text-center">
-                <th scope="col" style="width: 110px">년도</th>
-                <th scope="col" style="width: 120px">학기</th>
-                <th scope="col" style="width: 120px">취득학점</th>
-                <th scope="col" style="width: 180px">상세보기</th>
+                <th scope="col" style="width: 100px">년도</th>
+                <th scope="col" style="width: 100px">학기</th>
+                <th scope="col" style="width: 300px">교과목명</th>
+                <th scope="col" style="width: 100px">교과구분</th>
+                <th scope="col" style="width: 150px">담당교수</th>
+                <th scope="col" style="width: 100px">학점</th>
             </tr>
             </thead>
             <tbody>
@@ -33,12 +35,16 @@
                     <span th:text="${courses.semester}"></span>
                 </td>
                 <td>
-                    <span th:text="${courses.grades}"></span>
+                    <span th:text="${courses.subjectName}"></span>
                 </td>
                 <td>
-                    <a class="post-link" th:href="@{'/credit/' + ${courses.lectureDate} + '/' + ${courses.semester}}">
-                        <span>상세보기</span>
-                    </a>
+                    <span th:text="${courses.subjectClassification}"></span>
+                </td>
+                <td>
+                    <span th:text="${courses.professor}"></span>
+                </td>
+                <td>
+                    <span th:text="${courses.grades}"></span>
                 </td>
             </tr>
             <tr>
@@ -60,7 +66,7 @@
 
         <div class="form-group d-flex justify-content-between align-items-center">
             <div class="col-auto" style="padding-right: 150px">
-                <a th:href="@{/}" class="btn btn-primary ml-2">글쓰기</a>
+                <a th:href="@{/board/write}" class="btn btn-primary ml-2">글쓰기</a>
             </div>
         </div>
     </div>
