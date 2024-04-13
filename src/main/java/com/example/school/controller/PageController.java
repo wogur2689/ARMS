@@ -28,7 +28,7 @@ public class PageController {
 
     @GetMapping("/credit")
     public ModelAndView creditPage(ModelAndView mav) {
-        mav.addObject("list", coursesService.coursesList());
+        mav.addObject("list", coursesService.sumGradesWhereSemester());
         mav.addObject("sumGrades", coursesService.sumGrades());
         mav.setViewName("credit");
         return mav;
