@@ -26,7 +26,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             String userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             //Collection<GrantedAuthority> authority = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
-
             LoginDto loginDTO = LoginDto.builder()
                     .userId(userId)
                     .role(Role.USER.getRole())

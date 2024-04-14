@@ -1,0 +1,44 @@
+body {
+    background-color: #ffc107;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+.pagination {
+    position: sticky;
+    bottom: 0;
+    background-color: #fff; /* 원하는 배경색 설정 */
+}
+.pagination li {
+    display: inline;
+    margin: 0 5px; /* 페이지 번호 간의 간격 조정 */
+}
+
+.page-item {
+    list-style: none;
+}
+
+.form-group > div {
+    margin-right: -100px; /* 각 열 간 간격 조절 */
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid black;
+}
+
+.gle {
+    width: 200px;
+    height: 40px;
+    border: solid 1px lightskyblue;
+    background-color:lightskyblue;
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}

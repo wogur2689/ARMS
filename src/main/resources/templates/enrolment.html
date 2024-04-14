@@ -10,10 +10,9 @@
     <script th:src="@{/js/common.js}"></script>
 </head>
 <body>
-    <h1>수강 신청</h1>
-    <form id="form" method="post" th:action="@{/enrolmentInsert}">
+    <form id="form" class="w-100 mt-3 text-center" method="post" th:action="@{/enrolmentInsert}">
         <h1 class="h3 mb-3 fw-normal">수강신청</h1>
-        <div class="form-floating">
+        <div class="form-floating mb-3">
             <input type="text" class="w-25 py-2" id="lectureDate" name="lectureDate" value="2024"/>
         </div>
         <div class="form-floating mb-3">
@@ -35,10 +34,10 @@
             <input type="text" class="w-25 py-2" id="grades" name="grades" placeholder="학점"/>
         </div>
         <button class="btn btn-primary w-25 py-2" type="button" onclick="insert()" >수강신청하기</button>
-        <span id="errorMsg"></span>
     </form>
+    <h1 id="errorMsg" class="text-center"></h1>
     <script>
-        function insert() {
+       function insert() {
             var formData = {
                 "lectureDate": document.getElementById("lectureDate").value,
                 "semester": document.getElementById("semester").value,
@@ -59,12 +58,17 @@
                     'Content-Type': 'application/json'
                 },
                 body: jsonData
-            }).then(response => {
-                // 성공적으로 요청이 처리된 경우에 대한 처리
-                window.location = "http://localhost:8080"
-            }).catch(error => {
+            }).then(async res => {
+                if(!res.ok) {
+                    const result = await res.json(); // 응답의 body를 JSON 형식으로 파싱
+                    document.getElementById("errorMsg").innerText = result['msg'];
+                }
+                else {
+                    window.location = "http://localhost:8080"
+                }
+            }).catch(err => {
                 // 오류 발생 시 처리
-                document.getElementById("lectureDate").value = error
+                document.getElementById("errorMsg").value = "시스템 에러입니다. 다시 시도해 주세요."
             });
         }
     </script>

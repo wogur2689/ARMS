@@ -5,6 +5,8 @@ import com.example.school.service.CoursesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -52,16 +57,16 @@ public class PageController {
         return mav;
     }
     @PostMapping(value = "/enrolmentInsert")
-    public ModelAndView enrolment(@Valid @RequestBody CoursesRequestDto coursesRequestDto, BindingResult result, ModelAndView mav) {
-        log.info("c : " + coursesRequestDto.toString());
+    public ResponseEntity<Map<String, Object>> enrolment(@Valid @RequestBody CoursesRequestDto coursesRequestDto, BindingResult result) {
+        Map<String, Object> response = new HashMap<>();
         if (result.hasErrors()) {
-            mav.addObject("errorMsg", result.getFieldErrors());
-            mav.setViewName("enrolment");
-            return mav;
+            log.error("error  : " + result.getFieldError().getDefaultMessage());
+            response.put("msg", result.getFieldError().getDefaultMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
         coursesService.coursesSave(coursesRequestDto);
-        mav.setViewName("index");
-        return mav;
+        response.put("msg", "성공");
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/enrolmentInquiry")
