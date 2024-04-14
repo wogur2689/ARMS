@@ -11,5 +11,62 @@
 </head>
 <body>
     <h1>수강 신청</h1>
+    <form id="form" method="post" th:action="@{/enrolmentInsert}">
+        <h1 class="h3 mb-3 fw-normal">수강신청</h1>
+        <div class="form-floating">
+            <input type="text" class="w-25 py-2" id="lectureDate" name="lectureDate" value="2024"/>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="w-25 py-2" id="semester" name="semester" value="2"/>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="w-25 py-2" id="subjectCode" name="subjectCode" placeholder="교과코드"/>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="w-25 py-2" id="subjectName" name="subjectName" placeholder="교과목명"/>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="w-25 py-2" id="subjectClassification" name="subjectClassification" placeholder="교과구분"/>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="w-25 py-2" id="professor" name="professor" placeholder="담당교수"/>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="w-25 py-2" id="grades" name="grades" placeholder="학점"/>
+        </div>
+        <button class="btn btn-primary w-25 py-2" type="button" onclick="insert()" >수강신청하기</button>
+        <span id="errorMsg"></span>
+    </form>
+    <script>
+        function insert() {
+            var formData = {
+                "lectureDate": document.getElementById("lectureDate").value,
+                "semester": document.getElementById("semester").value,
+                "subjectCode": document.getElementById("subjectCode").value,
+                "subjectName": document.getElementById("subjectName").value,
+                "subjectClassification": document.getElementById("subjectClassification").value,
+                "professor": document.getElementById("professor").value,
+                "grades": document.getElementById("grades").value
+            };
+
+            // JSON 객체를 문자열로 변환
+            var jsonData = JSON.stringify(formData);
+
+            // 서버로 POST 요청 보내기
+            fetch('/enrolmentInsert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            }).then(response => {
+                // 성공적으로 요청이 처리된 경우에 대한 처리
+                window.location = "http://localhost:8080"
+            }).catch(error => {
+                // 오류 발생 시 처리
+                document.getElementById("lectureDate").value = error
+            });
+        }
+    </script>
 </body>
 </html>

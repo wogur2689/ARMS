@@ -7,16 +7,11 @@ import com.example.school.dto.CoursesResponseDto;
 import com.example.school.repository.CoursesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -26,15 +21,14 @@ public class CoursesService {
     private final CoursesRepository coursesRepository;
 
     //create
-    public CoursesResponseDto coursesSave(CoursesRequestDto coursesRequestDTO) {
-        Courses courses = coursesRepository.save(coursesRequestDTO.toEntity(coursesRequestDTO));
-        return CoursesResponseDto.toDto(courses);
+    public void coursesSave(CoursesRequestDto coursesRequestDTO) {
+        coursesRepository.save(coursesRequestDTO.toEntity(coursesRequestDTO));
     }
 
-    //list
+    //2024년 2학기 수강신청 내역
     @Transactional(readOnly = true)
     public List<CoursesResponseDto> coursesList() {
-        List<Courses> list = coursesRepository.findAll();
+        List<Courses> list = coursesRepository.findByLectureDateAndSemester("2024", 2).orElseThrow();
 
         return list.stream()
                 .map(CoursesResponseDto::toDto)
@@ -52,13 +46,16 @@ public class CoursesService {
     public List<CoursesResponseDto> sumGradesWhereSemester() {
         List<CoursesResponseDto> lists = new ArrayList<>();
         for(int i = 1; i < 3; i++) {
-            CoursesJpaResultDto o = coursesRepository.getData(i).orElseThrow();
-            Courses courses = Courses.builder()
-                    .lectureDate(o.getLectureDate())
-                    .semester(o.getSemester())
-                    .grades(o.getGrades().intValue())
-                    .build();
-            lists.add(CoursesResponseDto.toDto(courses));
+            List<CoursesJpaResultDto> o = coursesRepository.getData(i).orElseThrow();
+
+            for(CoursesJpaResultDto c : o) {
+                Courses courses = Courses.builder()
+                        .lectureDate(c.getLectureDate())
+                        .semester(c.getSemester())
+                        .grades(c.getGrades().intValue())
+                        .build();
+                lists.add(CoursesResponseDto.toDto(courses));
+            }
         }
         return lists;
     }
@@ -71,13 +68,5 @@ public class CoursesService {
         return coursesList.stream()
                 .map(CoursesResponseDto::toDto)
                 .toList();
-    }
-
-    //update
-    public CoursesResponseDto coursesUpdate(CoursesRequestDto coursesRequestDTO) {
-        Courses courses = coursesRepository.findById(coursesRequestDTO.getId()).orElseThrow();
-        //변경감지
-        courses.coursesUpdate(coursesRequestDTO);
-        return CoursesResponseDto.toDto(courses);
     }
 }

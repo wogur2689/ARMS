@@ -1,11 +1,17 @@
 package com.example.school.controller;
 
+import com.example.school.dto.CoursesRequestDto;
 import com.example.school.service.CoursesService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
@@ -45,9 +51,22 @@ public class PageController {
         mav.setViewName("enrolment");
         return mav;
     }
+    @PostMapping(value = "/enrolmentInsert")
+    public ModelAndView enrolment(@Valid @RequestBody CoursesRequestDto coursesRequestDto, BindingResult result, ModelAndView mav) {
+        log.info("c : " + coursesRequestDto.toString());
+        if (result.hasErrors()) {
+            mav.addObject("errorMsg", result.getFieldErrors());
+            mav.setViewName("enrolment");
+            return mav;
+        }
+        coursesService.coursesSave(coursesRequestDto);
+        mav.setViewName("index");
+        return mav;
+    }
 
     @GetMapping("/enrolmentInquiry")
     public ModelAndView enrolmentInquiryPage(ModelAndView mav) {
+        mav.addObject("list", coursesService.coursesList());
         mav.setViewName("enrolmentInquiry");
         return mav;
     }

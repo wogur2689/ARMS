@@ -11,5 +11,43 @@
 </head>
 <body>
     <h1>수강 신청 조회</h1>
+    <div class="container pt-4 mw-100">
+        <div class="form-group d-flex mb-2">
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col" style="width: 100px">년도</th>
+                <th scope="col" style="width: 100px">학기</th>
+                <th scope="col" style="width: 300px">교과목명</th>
+                <th scope="col" style="width: 100px">교과구분</th>
+                <th scope="col" style="width: 150px">담당교수</th>
+                <th scope="col" style="width: 100px">학점</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="courses : ${list}">
+                <th scope="row">
+                    <span th:text="${courses.lectureDate}"></span>
+                </th>
+                <td>
+                    <span th:text="${courses.semester}"></span>
+                </td>
+                <td>
+                    <span th:text="${courses.subjectName}"></span>
+                </td>
+                <td>
+                    <span th:text="${courses.subjectClassification}"></span>
+                </td>
+                <td>
+                    <span th:text="${courses.professor}"></span>
+                </td>
+                <td>
+                    <span th:text="${courses.grades}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

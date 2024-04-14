@@ -18,5 +18,5 @@ public interface CoursesRepository extends JpaRepository<Courses, Long> {
     int countByGrades();
 
     @Query("SELECT NEW com.example.school.dto.CoursesJpaResultDto(c.lectureDate, c.semester, SUM(c.grades)) FROM Courses c WHERE c.semester = :semester GROUP BY c.lectureDate, c.semester")
-    Optional<CoursesJpaResultDto> getData(@Param("semester") int semester);
+    Optional<List<CoursesJpaResultDto>> getData(@Param("semester") int semester);
 }

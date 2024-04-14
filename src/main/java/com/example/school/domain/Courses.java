@@ -41,15 +41,4 @@ public class Courses {
 
     @Column(name = "grades")
     private int grades;     //학점
-
-    //변경감지(수정)
-    public void coursesUpdate(CoursesRequestDto coursesRequestDTO) {
-        this.lectureDate = coursesRequestDTO.getLectureDate();
-        this.semester = coursesRequestDTO.getSemester();
-        this.subjectCode = coursesRequestDTO.getSubjectCode();
-        this.subjectName = coursesRequestDTO.getSubjectName();
-        this.subjectClassification = coursesRequestDTO.getSubjectClassification();
-        this.professor = coursesRequestDTO.getProfessor();
-        this.grades = coursesRequestDTO.getGrades();
-    }
 }
